@@ -1,0 +1,2 @@
+this point is: mean = 77.444
+standard deviation: deviation = 10.021

@@ -1,0 +1,5 @@
+Take a look at all provided sample Java programes. 
+
+Carry on with your coursework.
+
+Design white box testing for your system (using a test table).
