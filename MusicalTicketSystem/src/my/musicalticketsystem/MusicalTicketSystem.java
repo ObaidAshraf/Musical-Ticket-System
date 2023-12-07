@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package my.musicalticketsystem;
+import java.util.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -16,8 +19,38 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     public MusicalTicketSystem() {
         initComponents();
         
+        init_gui();
+        populate_data();
+     }
+    
+    private void init_gui() {
         // Add initialization of fields here
-        customerName.setText("Test123");
+        ticketCombobox.removeAllItems();
+        ticketCombobox.addItem("Adult");
+        ticketCombobox.addItem("Senior");
+        ticketCombobox.addItem("Student");
+    }
+    
+    private void populate_data() {
+        Dictionary<String, String[]> musicalShows = new Hashtable<>();
+//        Map musicalShows = new HashMap();  
+        String[] data = { "ABBA Voyage", "November 25th, 2024", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue" };
+        musicalShows.put("ABBA Voyage", data);
+        data = new String[] { "Mamma Mia", "September 28th, 2024", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre" };
+        musicalShows.put("Mamma Mia", data);
+        data = new String[] { "Mamma Mia! The Party", "March 3rd, 2024", "4 hours", "Immersive Theatre", "5+", "The O2" };
+        musicalShows.put("Mamma Mia! The Party", data);        
+        
+        Enumeration<String> e = musicalShows.keys();
+        showsCombobox.removeAllItems();
+        int row = 0;
+        while(e.hasMoreElements()) {
+            String k = e.nextElement();
+            showsCombobox.addItem(k);
+            for(int i = 0; i < 6; i++)
+                showsTable.setValueAt(musicalShows.get(k)[i], row, i);
+            row++;
+        }
     }
 
     /**
@@ -57,7 +90,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        showsTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("London Musical Ticket System");
@@ -224,15 +257,63 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
 
         jButton7.setText("Filter");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        javax.swing.table.DefaultTableModel tableModel = new javax.swing.table.DefaultTableModel();
+        showsTable.setModel(tableModel);
+        showsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Name", "Date", "Run time", "Category", "Age Limit", "Venue"
+                "Name", "Date", "Run Time", "Category", "Age Limit", "Venue"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -243,7 +324,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(showsTable);
 
         javax.swing.GroupLayout musicalPanelLayout = new javax.swing.GroupLayout(musicalPanel);
         musicalPanel.setLayout(musicalPanelLayout);
@@ -382,12 +463,12 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JPanel musicalPanel;
     private javax.swing.JButton printReceiptBtn;
     private javax.swing.JComboBox<String> seatCombobox;
     private javax.swing.JComboBox<String> showsCombobox;
+    private javax.swing.JTable showsTable;
     private javax.swing.JComboBox<String> slotCombobox;
     private javax.swing.JComboBox<String> ticketCombobox;
     private javax.swing.JPanel ticketPanel;
