@@ -32,25 +32,58 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     }
     
     private void populate_data() {
-        Dictionary<String, String[]> musicalShows = new Hashtable<>();
-//        Map musicalShows = new HashMap();  
-        String[] data = { "ABBA Voyage", "November 25th, 2024", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue" };
-        musicalShows.put("ABBA Voyage", data);
-        data = new String[] { "Mamma Mia", "September 28th, 2024", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre" };
-        musicalShows.put("Mamma Mia", data);
-        data = new String[] { "Mamma Mia! The Party", "March 3rd, 2024", "4 hours", "Immersive Theatre", "5+", "The O2" };
-        musicalShows.put("Mamma Mia! The Party", data);        
         
-        Enumeration<String> e = musicalShows.keys();
-        showsCombobox.removeAllItems();
+        HashMap<String, ArrayList<String[]>> hmap = new HashMap<String, ArrayList<String[]>>();
+        
+        ArrayList<String[]> list = new ArrayList<String[]>();
+        String[] data = {"ABBA Voyage", "November 25th, 2024", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue"};
+        list.add(data);
+        hmap.put("ABBA Voyage", list);
+        
+        list = new ArrayList<String[]>();        
+        data = new String[] { "Mamma Mia", "September 28th, 2024", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre" };
+        list.add(data);
+        hmap.put("Mamma Mia", list);
+        
+        list = new ArrayList<String[]>();        
+        data = new String[] { "Mamma Mia! The Party", "March 3rd, 2024", "4 hours", "Immersive Theatre", "5+", "The O2" };
+        list.add(data);
+        hmap.put("Mamma Mia! The Party", list);
+
         int row = 0;
-        while(e.hasMoreElements()) {
-            String k = e.nextElement();
-            showsCombobox.addItem(k);
-            for(int i = 0; i < 6; i++)
-                showsTable.setValueAt(musicalShows.get(k)[i], row, i);
-            row++;
+        showsCombobox.removeAllItems();
+        for (String i : hmap.keySet()) {
+          showsCombobox.addItem(i);
+          list = hmap.get(i);
+          for(int k = 0; k < list.size(); k++) {
+            data = list.get(k);
+            for(int j = 0; j < 6; j++) {
+                showsTable.setValueAt(data[j], row, j);
+            }
+          }
+          row++;
         }
+        
+        
+//        Dictionary<String, String[]> musicalShows = new Hashtable<>();
+////        Map musicalShows = new HashMap();  
+//        String[] data = { "ABBA Voyage", "November 25th, 2024", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue" };
+//        musicalShows.put("ABBA Voyage", data);
+//        data = new String[] { "Mamma Mia", "September 28th, 2024", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre" };
+//        musicalShows.put("Mamma Mia", data);
+//        data = new String[] { "Mamma Mia! The Party", "March 3rd, 2024", "4 hours", "Immersive Theatre", "5+", "The O2" };
+//        musicalShows.put("Mamma Mia! The Party", data);        
+//        
+//        Enumeration<String> e = musicalShows.keys();
+//        showsCombobox.removeAllItems();
+//        int row = 0;
+//        while(e.hasMoreElements()) {
+//            String k = e.nextElement();
+//            showsCombobox.addItem(k);
+//            for(int i = 0; i < 6; i++)
+//                showsTable.setValueAt(musicalShows.get(k)[i], row, i);
+//            row++;
+//        }
     }
 
     /**
