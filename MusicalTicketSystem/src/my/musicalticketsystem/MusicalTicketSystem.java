@@ -230,6 +230,22 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     }
     
     
+    private void cancel_ticket() {
+        
+        ArrayList<String[]> list = new ArrayList<String[]>();
+        
+        String cName = customerName.getText();
+
+        list = ticketsReserved.get(cName);
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+
+        list.remove(0);
+        
+        update_total_tickets();
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -349,6 +365,11 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         });
 
         cancelTicketBtn.setText("Cancel Ticket");
+        cancelTicketBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelTicketBtnActionPerformed(evt);
+            }
+        });
 
         labelTotalTickets.setText("Tickets Reserved");
 
@@ -590,6 +611,10 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     private void printReceiptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReceiptBtnActionPerformed
         print_receipt();
     }//GEN-LAST:event_printReceiptBtnActionPerformed
+
+    private void cancelTicketBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelTicketBtnActionPerformed
+        cancel_ticket();
+    }//GEN-LAST:event_cancelTicketBtnActionPerformed
 
     /**
      * @param args the command line arguments
