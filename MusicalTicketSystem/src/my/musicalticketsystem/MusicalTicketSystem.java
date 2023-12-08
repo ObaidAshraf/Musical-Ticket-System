@@ -28,8 +28,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         
         init_gui();
         
-        populate_shows();
-//        populate_slots();
+        populate_data();
         
      }
     
@@ -49,10 +48,33 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
             for (int j = 1; j <= 10; j++) {
                 seatCombobox.addItem(rows[i] + Integer.toString(j));
             }
-        }
-        
-        
+        }     
     }
+    
+    private void populate_list() {
+        int row = 0;
+        for (String i : shows.keySet()) {
+            ((DefaultTableModel)showsTable.getModel()).addRow(new Object[] {i});
+            row++;
+        }
+    }    
+
+    private void populate_shows() {
+        ArrayList<String[]> list = new ArrayList<String[]>();
+        String[] data;
+        int row = 0;
+        showsCombobox.removeAllItems();
+        for (String i : shows.keySet()) {
+          showsCombobox.addItem(i);
+          list = shows.get(i);
+          for(int k = 0; k < list.size(); k++) {
+            data = list.get(k);
+            ((DefaultTableModel)showsTable.getModel()).addRow(new Object[] {data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]});
+            row++;
+          }
+        }
+    }
+    
     
     private void populate_slots() {
         String d = (String)dateCombobox.getSelectedItem();
@@ -77,59 +99,43 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
             if (((DefaultComboBoxModel)dateCombobox.getModel()).getIndexOf(list.get(i)[1]) < 0)
                 dateCombobox.addItem(list.get(i)[1]);
         }
-        
-//        populate_slots();
     }
     
-    private void populate_shows() {
+    private void populate_data() {
         
         ArrayList<String[]> list = new ArrayList<String[]>();
         String[] data = {"ABBA Voyage", "12/9/2023", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "07:45 PM", "171"};
         list.add(data);
-        data = new String[] {"ABBA Voyage", "12/10/23", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "01:00 PM", "158"};
+        data = new String[] {"ABBA Voyage", "12/10/2023", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "01:00 PM", "158"};
         list.add(data);
-        data = new String[] {"ABBA Voyage", "12/10/23", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "06:00 PM", "126"};
+        data = new String[] {"ABBA Voyage", "12/10/2023", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "06:00 PM", "126"};
         list.add(data);
-        data = new String[] {"ABBA Voyage", "12/11/23", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "07:45 PM", "96"};
+        data = new String[] {"ABBA Voyage", "12/11/2023", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "07:45 PM", "96"};
         list.add(data);
         shows.put("ABBA Voyage", list);
 
         
         list = new ArrayList<String[]>();        
-        data = new String[] { "Mamma Mia", "12/7/23", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "03:00 PM", "38" };
+        data = new String[] { "Mamma Mia", "12/7/2023", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "03:00 PM", "38" };
         list.add(data);
-        data = new String[] { "Mamma Mia", "12/7/23", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "07:30 PM", "62" };
+        data = new String[] { "Mamma Mia", "12/7/2023", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "07:30 PM", "62" };
         list.add(data);
-        data = new String[] { "Mamma Mia", "12/8/23", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "07:30 PM", "44" };
+        data = new String[] { "Mamma Mia", "12/8/2023", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "07:30 PM", "44" };
         list.add(data);
-        data = new String[] { "Mamma Mia", "12/9/23", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "07:30 PM", "75" };
+        data = new String[] { "Mamma Mia", "12/9/2023", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "07:30 PM", "75" };
         list.add(data);
         shows.put("Mamma Mia", list);
         
         list = new ArrayList<String[]>();        
-        data = new String[] { "The Lion King", "12/7/23", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "07:30 PM", "48" };
+        data = new String[] { "The Lion King", "12/7/2023", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "07:30 PM", "48" };
         list.add(data);
-        data = new String[] { "The Lion King", "12/8/23", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "07:30 PM", "70" };
+        data = new String[] { "The Lion King", "12/8/2023", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "07:30 PM", "70" };
         list.add(data);
-        data = new String[] { "The Lion King", "12/9/23", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "02:30 PM", "48" };
+        data = new String[] { "The Lion King", "12/9/2023", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "02:30 PM", "48" };
         list.add(data);
-        data = new String[] { "The Lion King", "12/9/23", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "07:30 PM", "82" };
+        data = new String[] { "The Lion King", "12/9/2023", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "07:30 PM", "82" };
         list.add(data);
         shows.put("The Lion King", list);
-
-        int row = 0;
-        showsCombobox.removeAllItems();
-        for (String i : shows.keySet()) {
-          showsCombobox.addItem(i);
-          list = shows.get(i);
-          for(int k = 0; k < list.size(); k++) {
-            data = list.get(k);
-            for(int j = 0; j < 8; j++) {
-                showsTable.setValueAt(data[j], row, j);
-            }
-            row++;
-          }
-        }
     }
 
     /**
@@ -339,8 +345,18 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         musicalPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)), "Musical Shows"));
 
         jButton5.setText("Musical List");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Show Schedule");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Search");
 
@@ -350,59 +366,10 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         showsTable.setModel(tableModel);
         showsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Name", "Date", "Run Time", "Category", "Age Limit", "Venue", "Slot", "Price (in \u00A3)"
+                "Name", "Date", "Run Time", "Category", "Age Limit", "Venue", "Slot", "Price (\u00A3)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -501,6 +468,16 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     private void dateComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateComboboxActionPerformed
       populate_slots();
     }//GEN-LAST:event_dateComboboxActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        ((DefaultTableModel)showsTable.getModel()).setRowCount(0);
+        populate_list();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        ((DefaultTableModel)showsTable.getModel()).setRowCount(0);
+        populate_shows();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
