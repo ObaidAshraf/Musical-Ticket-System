@@ -104,6 +104,18 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         }
     }
     
+    private void update_total_tickets() {
+        ArrayList<String[]> list = new ArrayList<String[]>();
+        String[] data;
+        int total_tickets = 0;
+        for (String i : ticketsReserved.keySet()) {
+          list = ticketsReserved.get(i);
+          total_tickets += list.size();
+        }
+        
+        totalTicketsCount.setText(Integer.toString(total_tickets));
+    }
+    
     private void populate_slots() {
         String d = (String)dateCombobox.getSelectedItem();
         String m = (String)showsCombobox.getSelectedItem();
@@ -213,6 +225,8 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         }
         list.add(data);
         ticketsReserved.put(cName, list);
+        
+        update_total_tickets();
     }
     
     
@@ -245,8 +259,8 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         printReceiptBtn = new javax.swing.JButton();
         exitBtn = new javax.swing.JButton();
         cancelTicketBtn = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        labelTotalTickets = new javax.swing.JLabel();
+        totalTicketsCount = new javax.swing.JLabel();
         musicalPanel = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -336,9 +350,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
 
         cancelTicketBtn.setText("Cancel Ticket");
 
-        jLabel9.setText("Tickets Reserved");
+        labelTotalTickets.setText("Tickets Reserved");
 
-        jLabel10.setText("0");
+        totalTicketsCount.setText("0");
 
         javax.swing.GroupLayout ticketPanelLayout = new javax.swing.GroupLayout(ticketPanel);
         ticketPanel.setLayout(ticketPanelLayout);
@@ -359,7 +373,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
                                         .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(labelTotalTickets, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(ticketPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(customerName)
@@ -369,7 +383,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
                             .addComponent(slotCombobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ticketCombobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(seatCombobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(totalTicketsCount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(ticketPanelLayout.createSequentialGroup()
                         .addComponent(bookTicketBtn)
@@ -414,8 +428,8 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
                     .addComponent(seatCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(ticketPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10))
+                    .addComponent(labelTotalTickets)
+                    .addComponent(totalTicketsCount))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(ticketPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bookTicketBtn)
@@ -626,7 +640,6 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -634,8 +647,8 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelTotalTickets;
     private javax.swing.JPanel musicalPanel;
     private javax.swing.JButton printReceiptBtn;
     private javax.swing.JComboBox<String> seatCombobox;
@@ -644,5 +657,6 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> slotCombobox;
     private javax.swing.JComboBox<String> ticketCombobox;
     private javax.swing.JPanel ticketPanel;
+    private javax.swing.JLabel totalTicketsCount;
     // End of variables declaration//GEN-END:variables
 }
