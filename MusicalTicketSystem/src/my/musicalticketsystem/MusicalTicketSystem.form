@@ -317,6 +317,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Print receipt"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="printReceiptBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="exitBtn">
           <Properties>

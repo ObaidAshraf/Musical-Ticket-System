@@ -91,6 +91,18 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         }
     }
     
+    private void print_receipt() {
+        ArrayList<String[]> list = new ArrayList<String[]>();
+        String[] data;
+        for (String i : ticketsReserved.keySet()) {
+          list = ticketsReserved.get(i);
+          for(int k = 0; k < list.size(); k++) {
+            data = list.get(k);
+            for (int j = 0; j < data.length; j++)
+                System.out.println(data[j]);
+          }
+        }
+    }
     
     private void populate_slots() {
         String d = (String)dateCombobox.getSelectedItem();
@@ -134,14 +146,12 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
                 }
             }
             if (!found) {
-                System.err.println("Row to Remove " + r);
                 rowsToRemove.add(r);
             }
             found = false;
         }
         
         for (int r = 0; r < rowsToRemove.size(); r++) {
-            System.err.println("Removing " + (rowsToRemove.get(r)-rowsRemoved));
             dtm.removeRow(rowsToRemove.get(r)-rowsRemoved);
             rowsRemoved++;
         }
@@ -183,6 +193,30 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         shows.put("The Lion King", list);
     }
 
+    private void book_ticket() {
+        
+        ArrayList<String[]> list = new ArrayList<String[]>();
+        String[] data;
+        
+        String cName = customerName.getText();
+        String cEmail = customerEmail.getText();
+        String showName = (String)showsCombobox.getSelectedItem();
+        String showDate = (String)dateCombobox.getSelectedItem();
+        String showSlot = (String)slotCombobox.getSelectedItem();
+        String showTicket = (String)ticketCombobox.getSelectedItem();
+        String showSeat = (String)seatCombobox.getSelectedItem();
+     
+        data = new String[] {cName, cEmail, showName, showDate, showSlot, showTicket, showSeat};
+        list = ticketsReserved.get(cName);
+        if (list == null) {
+            list = new ArrayList<String[]>();
+        }
+        list.add(data);
+        ticketsReserved.put(cName, list);
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -287,6 +321,11 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         });
 
         printReceiptBtn.setText("Print receipt");
+        printReceiptBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printReceiptBtnActionPerformed(evt);
+            }
+        });
 
         exitBtn.setText("Exit");
         exitBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -500,7 +539,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     }//GEN-LAST:event_showsComboboxActionPerformed
 
     private void bookTicketBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookTicketBtnActionPerformed
-        // TODO add your handling code here:
+        book_ticket();
     }//GEN-LAST:event_bookTicketBtnActionPerformed
 
     private void customerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerNameActionPerformed
@@ -533,6 +572,10 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     private void filterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterBtnActionPerformed
         filter_shows();
     }//GEN-LAST:event_filterBtnActionPerformed
+
+    private void printReceiptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReceiptBtnActionPerformed
+        print_receipt();
+    }//GEN-LAST:event_printReceiptBtnActionPerformed
 
     /**
      * @param args the command line arguments
