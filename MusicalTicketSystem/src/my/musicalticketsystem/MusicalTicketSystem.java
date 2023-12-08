@@ -32,6 +32,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         
      }
     
+    
     private void init_gui() {
         // Add initialization of fields here
         ticketCombobox.removeAllItems();
@@ -39,6 +40,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         ticketCombobox.addItem("Senior");
         ticketCombobox.addItem("Student");
         
+        showsCombobox.removeAllItems();
         dateCombobox.removeAllItems();
         
         seatCombobox.removeAllItems();
@@ -48,7 +50,20 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
             for (int j = 1; j <= 10; j++) {
                 seatCombobox.addItem(rows[i] + Integer.toString(j));
             }
-        }     
+        }
+        
+        set_components_state(false);
+    }
+    
+    private void set_components_state(boolean  state) {
+        bookTicketBtn.setEnabled(state);
+        cancelTicketBtn.setEnabled(state);
+        printReceiptBtn.setEnabled(state);
+        showsCombobox.setEnabled(state);
+        dateCombobox.setEnabled(state);
+        slotCombobox.setEnabled(state);
+        ticketCombobox.setEnabled(state);
+        seatCombobox.setEnabled(state);
     }
     
     private void populate_list() {
@@ -165,7 +180,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         bookTicketBtn = new javax.swing.JButton();
         printReceiptBtn = new javax.swing.JButton();
         exitBtn = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        cancelTicketBtn = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         musicalPanel = new javax.swing.JPanel();
@@ -250,7 +265,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Cancel Ticket");
+        cancelTicketBtn.setText("Cancel Ticket");
 
         jLabel9.setText("Tickets Reserved");
 
@@ -290,7 +305,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
                     .addGroup(ticketPanelLayout.createSequentialGroup()
                         .addComponent(bookTicketBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
+                        .addComponent(cancelTicketBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(ticketPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -335,7 +350,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(ticketPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bookTicketBtn)
-                    .addComponent(jButton4)
+                    .addComponent(cancelTicketBtn)
                     .addComponent(printReceiptBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(exitBtn)
@@ -477,6 +492,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         ((DefaultTableModel)showsTable.getModel()).setRowCount(0);
         populate_shows();
+        set_components_state(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
@@ -518,11 +534,11 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bookTicketBtn;
+    private javax.swing.JButton cancelTicketBtn;
     private javax.swing.JTextField customerEmail;
     private javax.swing.JTextField customerName;
     private javax.swing.JComboBox<String> dateCombobox;
     private javax.swing.JButton exitBtn;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
