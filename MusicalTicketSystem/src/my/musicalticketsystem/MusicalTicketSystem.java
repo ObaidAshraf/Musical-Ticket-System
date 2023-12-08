@@ -64,6 +64,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         slotCombobox.setEnabled(state);
         ticketCombobox.setEnabled(state);
         seatCombobox.setEnabled(state);
+        filterBtn.setEnabled(state);
     }
     
     private void populate_list() {
@@ -116,6 +117,32 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         }
     }
     
+    private void filter_shows() {
+        boolean found = false;
+        ArrayList<Integer> rowsToRemove = new ArrayList<>();
+        String d = filterTextBox.getText();
+        String v;
+        HashMap<String, ArrayList<String[]>> showsLocal = new HashMap<String, ArrayList<String[]>>();
+        DefaultTableModel dtm = (DefaultTableModel)showsTable.getModel();
+        for (int r = 0; r < dtm.getRowCount(); r++) {
+            for (int c = 0; c < dtm.getColumnCount(); c++) {
+                  v = (String)dtm.getValueAt(r, c);
+                  if (v.contains(d)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                rowsToRemove.add(r);
+            }
+            found = false;
+        }
+        
+        for (int r = 0; r < rowsToRemove.size(); r++) {
+            dtm.removeRow(0);
+        }
+    }
+    
     private void populate_data() {
         
         ArrayList<String[]> list = new ArrayList<String[]>();
@@ -129,7 +156,6 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         list.add(data);
         shows.put("ABBA Voyage", list);
 
-        
         list = new ArrayList<String[]>();        
         data = new String[] { "Mamma Mia", "12/7/2023", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "03:00 PM", "38" };
         list.add(data);
@@ -187,8 +213,8 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jButton7 = new javax.swing.JButton();
+        filterTextBox = new javax.swing.JTextField();
+        filterBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         showsTable = new javax.swing.JTable();
 
@@ -375,7 +401,12 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
 
         jLabel8.setText("Search");
 
-        jButton7.setText("Filter");
+        filterBtn.setText("Filter");
+        filterBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filterBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.table.DefaultTableModel tableModel = new javax.swing.table.DefaultTableModel();
         showsTable.setModel(tableModel);
@@ -412,9 +443,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(filterTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton7)
+                        .addComponent(filterBtn)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -425,8 +456,8 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
                     .addComponent(jButton5)
                     .addComponent(jButton6)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7))
+                    .addComponent(filterTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filterBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 7, Short.MAX_VALUE))
@@ -495,6 +526,10 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         set_components_state(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void filterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterBtnActionPerformed
+        filter_shows();
+    }//GEN-LAST:event_filterBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -539,9 +574,10 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     private javax.swing.JTextField customerName;
     private javax.swing.JComboBox<String> dateCombobox;
     private javax.swing.JButton exitBtn;
+    private javax.swing.JButton filterBtn;
+    private javax.swing.JTextField filterTextBox;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -553,7 +589,6 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JPanel musicalPanel;
     private javax.swing.JButton printReceiptBtn;
     private javax.swing.JComboBox<String> seatCombobox;
