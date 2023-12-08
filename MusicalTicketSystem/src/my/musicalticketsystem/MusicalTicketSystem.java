@@ -119,6 +119,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     
     private void filter_shows() {
         boolean found = false;
+        int rowsRemoved = 0;
         ArrayList<Integer> rowsToRemove = new ArrayList<>();
         String d = filterTextBox.getText();
         String v;
@@ -133,13 +134,16 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
                 }
             }
             if (!found) {
+                System.err.println("Row to Remove " + r);
                 rowsToRemove.add(r);
             }
             found = false;
         }
         
         for (int r = 0; r < rowsToRemove.size(); r++) {
-            dtm.removeRow(0);
+            System.err.println("Removing " + (rowsToRemove.get(r)-rowsRemoved));
+            dtm.removeRow(rowsToRemove.get(r)-rowsRemoved);
+            rowsRemoved++;
         }
     }
     
