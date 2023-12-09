@@ -147,7 +147,6 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         ArrayList<Integer> rowsToRemove = new ArrayList<>();
         String d = filterTextBox.getText();
         String v;
-        HashMap<String, ArrayList<String[]>> showsLocal = new HashMap<String, ArrayList<String[]>>();
         DefaultTableModel dtm = (DefaultTableModel)showsTable.getModel();
         for (int r = 0; r < dtm.getRowCount(); r++) {
             for (int c = 0; c < dtm.getColumnCount(); c++) {
@@ -205,6 +204,22 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         shows.put("The Lion King", list);
     }
 
+    private String get_show_price(String show_name, String show_date, String show_slot) {
+        
+        ArrayList<String[]> list = new ArrayList<String[]>();
+        String[] data;
+        for (String i : shows.keySet()) {
+          list = shows.get(i);
+          for(int k = 0; k < list.size(); k++) {
+            data = list.get(k);
+            if (show_name.equals(data[0]) && show_date.equals(data[1]) && show_slot.equals(data[6])) {
+                return data[7];
+            }
+          }
+        }        
+        return "0";
+    }
+    
     private void book_ticket() {
         
         ArrayList<String[]> list = new ArrayList<String[]>();
@@ -217,14 +232,15 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         String showSlot = (String)slotCombobox.getSelectedItem();
         String showTicket = (String)ticketCombobox.getSelectedItem();
         String showSeat = (String)seatCombobox.getSelectedItem();
-     
-        data = new String[] {cName, cEmail, showName, showDate, showSlot, showTicket, showSeat};
+        String ticket_price = get_show_price(showName, showDate, showSlot);
+        
+        data = new String[] {cName, cEmail, showName, showDate, showSlot, showTicket, showSeat, ticket_price};
         list = ticketsReserved.get(cName);
         if (list == null) {
             list = new ArrayList<String[]>();
         }
         list.add(data);
-        ticketsReserved.put(cName, list);
+        ticketsReserved.put(cName, list);        
         
         update_total_tickets();
     }
