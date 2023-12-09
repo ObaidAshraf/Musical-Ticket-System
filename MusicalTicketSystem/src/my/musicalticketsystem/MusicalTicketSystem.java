@@ -92,6 +92,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     }
     
     private void print_receipt() {
+        
         ArrayList<String[]> list = new ArrayList<String[]>();
         String[] data;
         for (String i : ticketsReserved.keySet()) {
@@ -170,38 +171,43 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     
     private void populate_data() {
         
-        ArrayList<String[]> list = new ArrayList<String[]>();
-        String[] data = {"ABBA Voyage", "12/9/2023", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "07:45 PM", "171"};
-        list.add(data);
-        data = new String[] {"ABBA Voyage", "12/10/2023", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "01:00 PM", "158"};
-        list.add(data);
-        data = new String[] {"ABBA Voyage", "12/10/2023", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "06:00 PM", "126"};
-        list.add(data);
-        data = new String[] {"ABBA Voyage", "12/11/2023", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "07:45 PM", "96"};
-        list.add(data);
-        shows.put("ABBA Voyage", list);
+//        ArrayList<String[]> list = new ArrayList<String[]>();
+//        String[] data = {"ABBA Voyage", "12/9/2023", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "07:45 PM", "171"};
+//        list.add(data);
+//        data = new String[] {"ABBA Voyage", "12/10/2023", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "01:00 PM", "158"};
+//        list.add(data);
+//        data = new String[] {"ABBA Voyage", "12/10/2023", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "06:00 PM", "126"};
+//        list.add(data);
+//        data = new String[] {"ABBA Voyage", "12/11/2023", "1 hour 30 minutes", "Entertainment", "6+", "ABBA Venue", "07:45 PM", "96"};
+//        list.add(data);
+//        shows.put("ABBA Voyage", list);
+//
+//        list = new ArrayList<String[]>();        
+//        data = new String[] { "Mamma Mia", "12/7/2023", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "03:00 PM", "38" };
+//        list.add(data);
+//        data = new String[] { "Mamma Mia", "12/7/2023", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "07:30 PM", "62" };
+//        list.add(data);
+//        data = new String[] { "Mamma Mia", "12/8/2023", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "07:30 PM", "44" };
+//        list.add(data);
+//        data = new String[] { "Mamma Mia", "12/9/2023", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "07:30 PM", "75" };
+//        list.add(data);
+//        shows.put("Mamma Mia", list);
+//        
+//        list = new ArrayList<String[]>();        
+//        data = new String[] { "The Lion King", "12/7/2023", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "07:30 PM", "48" };
+//        list.add(data);
+//        data = new String[] { "The Lion King", "12/8/2023", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "07:30 PM", "70" };
+//        list.add(data);
+//        data = new String[] { "The Lion King", "12/9/2023", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "02:30 PM", "48" };
+//        list.add(data);
+//        data = new String[] { "The Lion King", "12/9/2023", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "07:30 PM", "82" };
+//        list.add(data);
+//        shows.put("The Lion King", list);
 
-        list = new ArrayList<String[]>();        
-        data = new String[] { "Mamma Mia", "12/7/2023", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "03:00 PM", "38" };
-        list.add(data);
-        data = new String[] { "Mamma Mia", "12/7/2023", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "07:30 PM", "62" };
-        list.add(data);
-        data = new String[] { "Mamma Mia", "12/8/2023", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "07:30 PM", "44" };
-        list.add(data);
-        data = new String[] { "Mamma Mia", "12/9/2023", "2 hours 35 mins", "Family & Kids", "5+", "Novello Theatre", "07:30 PM", "75" };
-        list.add(data);
-        shows.put("Mamma Mia", list);
-        
-        list = new ArrayList<String[]>();        
-        data = new String[] { "The Lion King", "12/7/2023", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "07:30 PM", "48" };
-        list.add(data);
-        data = new String[] { "The Lion King", "12/8/2023", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "07:30 PM", "70" };
-        list.add(data);
-        data = new String[] { "The Lion King", "12/9/2023", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "02:30 PM", "48" };
-        list.add(data);
-        data = new String[] { "The Lion King", "12/9/2023", "2 hours 30 mins", "Family & Kids", "6+", "Lyceum Theatre", "07:30 PM", "82" };
-        list.add(data);
-        shows.put("The Lion King", list);
+        MusicalDataHandler dataHandler = new MusicalDataHandler();
+        shows = dataHandler.read_data();
+
+
     }
 
     private String get_show_price(String show_name, String show_date, String show_slot) {
@@ -612,6 +618,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         ((DefaultTableModel)showsTable.getModel()).setRowCount(0);
         populate_list();
+        set_components_state(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
