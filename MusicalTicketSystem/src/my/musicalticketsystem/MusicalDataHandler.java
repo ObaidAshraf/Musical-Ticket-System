@@ -15,6 +15,8 @@ public class MusicalDataHandler {
     
     public HashMap<String, ArrayList<String[]>> read_data() {
         HashMap<String, ArrayList<String[]>> shows = new HashMap<>();
+        HashMap<String, ArrayList<String[]>> shows1 = new HashMap<>();
+
         ArrayList<String[]> list;
         String[] data;
         
@@ -45,8 +47,10 @@ public class MusicalDataHandler {
             e.printStackTrace();  
         } 
         
-        dbHandler.close_db_connection();
-        return shows;
+        shows1 = dbHandler.fetch_records_from_db();
+        
+//        dbHandler.close_db_connection();
+        return shows1;
     }
     
     public void save_receipt(String cName, ArrayList<String[]> customer_data) {

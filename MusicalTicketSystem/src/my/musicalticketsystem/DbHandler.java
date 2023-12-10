@@ -9,9 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import java.util.ArrayList;
-import java.util.Properties;
+import java.util.*;
 
 /**
  *
@@ -63,6 +61,36 @@ public class DbHandler {
         } catch (Exception e) {
             e.printStackTrace();
         } 
+    }
+    
+    public  HashMap<String, ArrayList<String[]>> fetch_records_from_db() {
+        HashMap<String, ArrayList<String[]>> shows = new HashMap<>();
+        Statement s;
+        ResultSet rs = null;
+        ArrayList<String[]> list;
+        String[] data;
+        try {
+            s = conn.createStatement();
+            rs = s.executeQuery("SELECT * FROM SHOWS");
+            while (rs.next()) {
+                data = new String[8];
+                for (int i = 0; i < data.length; i++)
+                    data[i] = rs.getString(i+1);
+                
+                list = shows.get(data[0]);
+                if (list == null) {
+                    list = new ArrayList<String[]>();
+                }
+                list.add(data);
+                shows.put(data[0], list);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return shows;
+        }
+        
+        return shows;
     }
     
     public void close_db_connection() {
