@@ -18,6 +18,14 @@ public class MusicalDataHandler {
         ArrayList<String[]> list;
         String[] data;
         
+        DbHandler dbHandler = new DbHandler();
+        try {
+            dbHandler.setup_db_connection();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return shows;
+        }
+        
         try (BufferedReader br = new BufferedReader(new FileReader("shows.csv"))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -29,11 +37,15 @@ public class MusicalDataHandler {
                 data = new String[] {values[0], values[1], values[2], values[3], values[4], values[5], values[6], values[7]};
                 list.add(data);
                 shows.put(values[0], list);
+                dbHandler.insert_record_into_db(data);
             }
         }
         catch (IOException e) {  
+            dbHandler.close_db_connection();
             e.printStackTrace();  
         } 
+        
+        dbHandler.close_db_connection();
         return shows;
     }
     
