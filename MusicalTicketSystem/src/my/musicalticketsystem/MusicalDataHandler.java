@@ -52,6 +52,19 @@ public class MusicalDataHandler {
         return shows;
     }
     
+    public HashMap<String, ArrayList<String[]>> get_filtered_records_from_db(String pattern, String column) {
+        HashMap<String, ArrayList<String[]>> shows =  new HashMap<String, ArrayList<String[]>>();
+        DbHandler dbHandler = new DbHandler();
+
+        try {
+            dbHandler.setup_db_connection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        shows = dbHandler.fetch_filtered_records_from_db(pattern, column);
+        return shows;
+    }
     
     public void clear_all_records() {
         DbHandler dbHandler = new DbHandler();

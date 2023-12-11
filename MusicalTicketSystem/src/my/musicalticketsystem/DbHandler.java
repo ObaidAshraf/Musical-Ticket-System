@@ -92,6 +92,36 @@ public class DbHandler {
         return shows;
     }
     
+    public HashMap<String, ArrayList<String[]>> fetch_filtered_records_from_db(String pattern, String column) {
+        HashMap<String, ArrayList<String[]>> shows = new HashMap<>();
+        Statement s;
+        ResultSet rs = null;
+        ArrayList<String[]> list;
+        String[] data;
+        try {
+            s = conn.createStatement();
+            rs = s.executeQuery("SELECT * FROM SHOWS WHERE UPPER(" + column + ") LIKE UPPER('%" + pattern + "%')");
+            while (rs.next()) {
+                data = new String[8];
+                for (int i = 0; i < data.length; i++)
+                    data[i] = rs.getString(i+1);
+                
+                list = shows.get(data[0]);
+                if (list == null) {
+                    list = new ArrayList<String[]>();
+                }
+                list.add(data);
+                shows.put(data[0], list);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return shows;
+        }
+        
+        return shows;
+    }
+    
     public void clear_shows_table() {
         Statement s;
         int rs;
@@ -103,6 +133,8 @@ public class DbHandler {
             e.printStackTrace();
         }
     }
+    
+    
     
     
     public void close_db_connection() {
