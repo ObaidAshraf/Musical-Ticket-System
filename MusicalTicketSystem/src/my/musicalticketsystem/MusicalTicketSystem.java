@@ -706,7 +706,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         String filter = (String)filterComboBox.getSelectedItem();
         String pattern = filterComboTextbox.getText();
         
-        if (pattern.length() == 0) {
+        if (pattern.length() == 0 || filter.contains("Select")) {
             return;
         }
         
