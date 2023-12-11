@@ -13,10 +13,7 @@ import java.text.*;
  */
 public class MusicalDataHandler {
     
-    public HashMap<String, ArrayList<String[]>> read_data() {
-        HashMap<String, ArrayList<String[]>> shows = new HashMap<>();
-        HashMap<String, ArrayList<String[]>> shows1 = new HashMap<>();
-
+    public void read_data_and_insert_into_db(String filename) {
         ArrayList<String[]> list;
         String[] data;
         
@@ -25,32 +22,45 @@ public class MusicalDataHandler {
             dbHandler.setup_db_connection();
         } catch (Exception e) {
             e.printStackTrace();
-            return shows;
         }
         
-        try (BufferedReader br = new BufferedReader(new FileReader("shows.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
-                list = shows.get((String)values[0]);
-                if (list == null) {
-                    list = new ArrayList<String[]>();
-                }
                 data = new String[] {values[0], values[1], values[2], values[3], values[4], values[5], values[6], values[7]};
-                list.add(data);
-                shows.put(values[0], list);
                 dbHandler.insert_record_into_db(data);
             }
         }
         catch (IOException e) {  
-            dbHandler.close_db_connection();
             e.printStackTrace();  
         } 
         
-        shows1 = dbHandler.fetch_records_from_db();
+    }
+    
+    public HashMap<String, ArrayList<String[]>> get_records_from_db() {
+        HashMap<String, ArrayList<String[]>> shows =  new HashMap<String, ArrayList<String[]>>();
+        DbHandler dbHandler = new DbHandler();
+
+        try {
+            dbHandler.setup_db_connection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
-//        dbHandler.close_db_connection();
-        return shows1;
+        shows = dbHandler.fetch_records_from_db();
+        return shows;
+    }
+    
+    
+    public void clear_all_records() {
+        DbHandler dbHandler = new DbHandler();
+        try {
+            dbHandler.setup_db_connection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        dbHandler.clear_shows_table();
     }
     
     public void save_receipt(String cName, ArrayList<String[]> customer_data) {

@@ -28,11 +28,15 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         initComponents();
         
         init_gui();
-        
+     
         populate_data();
         
      }
     
+    private void populate_data() {
+        MusicalDataHandler dataHandler = new MusicalDataHandler();
+        shows = dataHandler.get_records_from_db();
+    }
     
     private void init_gui() {
         // Add initialization of fields here
@@ -165,10 +169,10 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         }
     }
     
-    private void populate_data() {
+    private void import_data(String filename) {
         
         MusicalDataHandler dataHandler = new MusicalDataHandler();
-        shows = dataHandler.read_data();
+        dataHandler.read_data_and_insert_into_db(filename);
 
     }
 
@@ -269,8 +273,8 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         filterBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         showsTable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        clearDataBtn = new javax.swing.JButton();
+        importDataBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("London Musical Ticket System");
@@ -492,12 +496,17 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(showsTable);
 
-        jButton1.setText("Clear Data");
-
-        jButton2.setText("Import Data");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        clearDataBtn.setText("Clear Data");
+        clearDataBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                clearDataBtnActionPerformed(evt);
+            }
+        });
+
+        importDataBtn.setText("Import Data");
+        importDataBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                importDataBtnActionPerformed(evt);
             }
         });
 
@@ -522,9 +531,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(filterBtn))
                             .addGroup(musicalPanelLayout.createSequentialGroup()
-                                .addComponent(jButton2)
+                                .addComponent(importDataBtn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1)))
+                                .addComponent(clearDataBtn)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -532,8 +541,8 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
             musicalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(musicalPanelLayout.createSequentialGroup()
                 .addGroup(musicalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(importDataBtn)
+                    .addComponent(clearDataBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(musicalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
@@ -622,16 +631,27 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         cancel_ticket();
     }//GEN-LAST:event_cancelTicketBtnActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void importDataBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importDataBtnActionPerformed
         JFileChooser fileChooser = new JFileChooser();
+        File selectedFile = null;
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-        System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            selectedFile = fileChooser.getSelectedFile();
 }
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+        import_data(selectedFile.getAbsolutePath());
+        populate_data();
+        ((DefaultTableModel)showsTable.getModel()).setRowCount(0);
+        populate_shows();
+    }//GEN-LAST:event_importDataBtnActionPerformed
+
+    private void clearDataBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDataBtnActionPerformed
+        MusicalDataHandler dataHandler = new MusicalDataHandler();
+        dataHandler.clear_all_records();
+        ((DefaultTableModel)showsTable.getModel()).setRowCount(0);
+        shows = new HashMap<String, ArrayList<String[]>>();
+        // TODO: Add reset all GUI components logic here
+    }//GEN-LAST:event_clearDataBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -673,14 +693,14 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bookTicketBtn;
     private javax.swing.JButton cancelTicketBtn;
+    private javax.swing.JButton clearDataBtn;
     private javax.swing.JTextField customerEmail;
     private javax.swing.JTextField customerName;
     private javax.swing.JComboBox<String> dateCombobox;
     private javax.swing.JButton exitBtn;
     private javax.swing.JButton filterBtn;
     private javax.swing.JTextField filterTextBox;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton importDataBtn;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;

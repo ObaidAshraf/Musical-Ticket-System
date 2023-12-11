@@ -48,7 +48,6 @@ public class DbHandler {
             s = conn.createStatement();
             statements.add(s);
 
-
             psInsert = conn.prepareStatement("insert into shows values (?, ?, ?, ?, ?, ?, ?, ?)");
             statements.add(psInsert);
 
@@ -92,6 +91,19 @@ public class DbHandler {
         
         return shows;
     }
+    
+    public void clear_shows_table() {
+        Statement s;
+        int rs;
+        try {
+            s = conn.createStatement();
+            rs = s.executeUpdate("TRUNCATE TABLE SHOWS");
+            conn.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     
     public void close_db_connection() {
         try {
