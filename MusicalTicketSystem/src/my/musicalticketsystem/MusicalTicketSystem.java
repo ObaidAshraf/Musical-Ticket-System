@@ -71,6 +71,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     }
     
     private void set_components_state(boolean  state) {
+        if (state == true && shows.isEmpty()) {
+            return;
+        }
         bookTicketBtn.setEnabled(state);
         cancelTicketBtn.setEnabled(state);
         printReceiptBtn.setEnabled(state);
@@ -687,7 +690,10 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileChooser.getSelectedFile();
-}
+        }
+        if (selectedFile == null) {
+            return;
+        }
         import_data(selectedFile.getAbsolutePath());
         populate_data();
         ((DefaultTableModel)showsTable.getModel()).setRowCount(0);
@@ -699,7 +705,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         dataHandler.clear_all_records();
         ((DefaultTableModel)showsTable.getModel()).setRowCount(0);
         shows = new HashMap<String, ArrayList<String[]>>();
-        // TODO: Add reset all GUI components logic here
+        init_gui();
     }//GEN-LAST:event_clearDataBtnActionPerformed
 
     private void filterComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterComboBoxActionPerformed
