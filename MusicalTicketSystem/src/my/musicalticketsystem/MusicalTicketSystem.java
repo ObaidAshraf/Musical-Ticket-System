@@ -6,7 +6,6 @@ package my.musicalticketsystem;
 import java.util.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.table.TableModel;
 import javax.swing.JFileChooser;
 import java.io.File; 
 import java.util.regex.Pattern;
@@ -32,7 +31,7 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         populate_data();
         this.setResizable(false);
      }
-    
+      
     private void populate_data() {
         MusicalDataHandler dataHandler = new MusicalDataHandler();
         shows = dataHandler.get_records_from_db();
@@ -75,6 +74,8 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     
     private void set_components_state(boolean  state) {
         if (state == true && shows.isEmpty()) {
+            dialogBox dbox = new dialogBox();
+            dbox.show_dialog("Shows table is empty");
             return;
         }
         bookTicketBtn.setEnabled(state);
@@ -238,8 +239,16 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         String cName = customerName.getText();
         String cEmail = customerEmail.getText();
         
-        if (!Pattern.matches("^[a-zA-Z0-9_]+$", cName) || !Pattern.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", cEmail)) {
-           return;
+        if (!Pattern.matches("^[a-zA-Z0-9_]+$", cName)) {
+            dialogBox dbox = new dialogBox();
+            dbox.show_dialog("Customer name can only contain alphanumeric and underscore.");
+            return;
+        }
+        
+        if (!Pattern.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", cEmail)) {
+            dialogBox dbox = new dialogBox();
+            dbox.show_dialog("Email address is invalid.");
+            return;
         }
         
         String showName = (String)showsCombobox.getSelectedItem();
@@ -731,8 +740,13 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         }
         
         MusicalDataHandler dataHandler = new MusicalDataHandler();
-        ((DefaultTableModel)showsTable.getModel()).setRowCount(0);
         shows_filtered = dataHandler.get_filtered_records_from_db(pattern, filter);
+        if (shows_filtered.isEmpty()) {
+            dialogBox dbox = new dialogBox();
+            dbox.show_dialog("Search was unsuccessful");
+            return;
+        }
+        ((DefaultTableModel)showsTable.getModel()).setRowCount(0);
         populate_shows_filtered();
     }//GEN-LAST:event_filterComboBoxActionPerformed
 

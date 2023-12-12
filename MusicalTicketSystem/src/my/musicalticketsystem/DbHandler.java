@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
-
+import java.util.regex.Pattern;
 /**
  *
  * @author Administrator
@@ -34,6 +34,8 @@ public class DbHandler {
             conn.setAutoCommit(false);
         } catch(Exception e) {
             System.err.println("Failed to connect to database " + dbName);
+            dialogBox dbox = new dialogBox();
+            dbox.show_dialog("Failed to connect to database " + dbName);
         }
     }
     
@@ -100,6 +102,13 @@ public class DbHandler {
         String[] data;
         try {
             s = conn.createStatement();
+            if (column.equals("price")) {
+                if (!Pattern.matches("[0-9]+", pattern)) {
+                    dialogBox dbox = new dialogBox();
+                    dbox.show_dialog("Invalid price");
+                    return shows;
+                }
+            }
             rs = s.executeQuery("SELECT * FROM SHOWS WHERE UPPER(" + column + ") LIKE UPPER('%" + pattern + "%')");
             while (rs.next()) {
                 data = new String[8];
@@ -131,6 +140,8 @@ public class DbHandler {
             conn.commit();
         } catch (Exception e) {
             System.err.println("Failed to clear records in database " + dbName);
+            dialogBox dbox = new dialogBox();
+            dbox.show_dialog("Failed to clear records in database " + dbName);
         }
     }
     

@@ -30,6 +30,8 @@ public class MusicalDataHandler {
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values.length == 0 || values.length != 8) {
+                    dialogBox dbox = new dialogBox();
+                    dbox.show_dialog("File is invalid");
                     return;
                 }
                 data = new String[] {values[0], values[1], values[2], values[3], values[4], values[5], values[6], values[7]};
@@ -95,7 +97,9 @@ public class MusicalDataHandler {
         try {
             File receiptFile = new File(filename);
             if (!receiptFile.createNewFile()) {
-                System.out.println("Failed to create receipt file");
+                System.out.println("Failed to create receipt file");            
+                dialogBox dbox = new dialogBox();
+                dbox.show_dialog("Failed to create receipt file");
                 return;
             }
         
