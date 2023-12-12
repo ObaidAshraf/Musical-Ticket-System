@@ -49,11 +49,11 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         filterComboBox.addItem("Select filter");
         filterComboBox.addItem("title");
         filterComboBox.addItem("date");
-        filterComboBox.addItem("run-time");  
+        filterComboBox.addItem("run_time");  
         filterComboBox.addItem("category");
-        filterComboBox.addItem("age-limit");
+        filterComboBox.addItem("age_limit");
         filterComboBox.addItem("venue");  
-        filterComboBox.addItem("time-slot");
+        filterComboBox.addItem("slot");
         filterComboBox.addItem("price");
         
         showsCombobox.removeAllItems();
