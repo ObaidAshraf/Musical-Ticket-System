@@ -19,21 +19,21 @@ public class DbHandler {
     
     private String framework = "embedded";
     private String protocol = "jdbc:derby://localhost:1527/";
+    private String dbName = "MusicalTicketSystem";
     Connection conn = null;
     
     public void setup_db_connection() {
         Properties props = new Properties();
         props.put("user", "app");
         props.put("password", "app");
-
-        String dbName = "MusicalTicketSystem";
+        
         try {
             conn = DriverManager.getConnection(protocol + dbName+ "", props);
 
             System.out.println("Connected to and created database " + dbName);
             conn.setAutoCommit(false);
         } catch(Exception e) {
-            e.printStackTrace();
+            System.err.println("Failed to connect to database " + dbName);
         }
     }
     
@@ -48,7 +48,7 @@ public class DbHandler {
             s = conn.createStatement();
             statements.add(s);
 
-            psInsert = conn.prepareStatement("insert into shows values (?, ?, ?, ?, ?, ?, ?, ?)");
+            psInsert = conn.prepareStatement("INSERT INTO SHOWS VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
             statements.add(psInsert);
 
             for (int i = 1; i <= record.length; i++)
@@ -85,7 +85,7 @@ public class DbHandler {
             }
             
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Failed to Fetch records from database " + dbName);
             return shows;
         }
         
@@ -115,7 +115,7 @@ public class DbHandler {
             }
             
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Failed to Fetch records from database " + dbName);
             return shows;
         }
         
@@ -130,12 +130,9 @@ public class DbHandler {
             rs = s.executeUpdate("TRUNCATE TABLE SHOWS");
             conn.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Failed to clear records in database " + dbName);
         }
     }
-    
-    
-    
     
     public void close_db_connection() {
         try {

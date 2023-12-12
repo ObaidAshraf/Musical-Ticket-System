@@ -22,12 +22,16 @@ public class MusicalDataHandler {
             dbHandler.setup_db_connection();
         } catch (Exception e) {
             e.printStackTrace();
+            return;
         }
         
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
+                if (values.length == 0 || values.length != 8) {
+                    return;
+                }
                 data = new String[] {values[0], values[1], values[2], values[3], values[4], values[5], values[6], values[7]};
                 dbHandler.insert_record_into_db(data);
             }
@@ -46,6 +50,7 @@ public class MusicalDataHandler {
             dbHandler.setup_db_connection();
         } catch (Exception e) {
             e.printStackTrace();
+            return shows;
         }
         
         shows = dbHandler.fetch_records_from_db();
@@ -60,6 +65,7 @@ public class MusicalDataHandler {
             dbHandler.setup_db_connection();
         } catch (Exception e) {
             e.printStackTrace();
+            return shows;
         }
         
         shows = dbHandler.fetch_filtered_records_from_db(pattern, column);
@@ -72,6 +78,7 @@ public class MusicalDataHandler {
             dbHandler.setup_db_connection();
         } catch (Exception e) {
             e.printStackTrace();
+            return;
         }
         dbHandler.clear_shows_table();
     }
@@ -117,9 +124,8 @@ public class MusicalDataHandler {
             fwriter.close();
         } catch (IOException e) {
             e.printStackTrace();
-            return;
         }
     }
-    
-    
+
+
 }

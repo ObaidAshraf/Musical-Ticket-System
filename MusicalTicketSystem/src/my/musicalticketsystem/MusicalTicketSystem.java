@@ -8,7 +8,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.TableModel;
 import javax.swing.JFileChooser;
-import java.io.File;   
+import java.io.File; 
+import java.util.regex.Pattern;
 /**
  *
  * @author ubaid
@@ -65,8 +66,10 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
             for (int j = 1; j <= 10; j++) {
                 seatCombobox.addItem(rows[i] + Integer.toString(j));
             }
-        }
+        }   
         
+        printReceiptBtn.setEnabled(false);
+
         set_components_state(false);
     }
     
@@ -76,7 +79,6 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         }
         bookTicketBtn.setEnabled(state);
         cancelTicketBtn.setEnabled(state);
-        printReceiptBtn.setEnabled(state);
         showsCombobox.setEnabled(state);
         dateCombobox.setEnabled(state);
         slotCombobox.setEnabled(state);
@@ -141,6 +143,13 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         for (String i : ticketsReserved.keySet()) {
           list = ticketsReserved.get(i);
           total_tickets += list.size();
+        }
+        
+        if (total_tickets > 0) {
+            printReceiptBtn.setEnabled(true);
+        }
+        else {
+            printReceiptBtn.setEnabled(false);
         }
         
         totalTicketsCount.setText(Integer.toString(total_tickets));
@@ -228,6 +237,11 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         
         String cName = customerName.getText();
         String cEmail = customerEmail.getText();
+        
+        if (!Pattern.matches("^[a-zA-Z0-9_]+$", cName) || !Pattern.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", cEmail)) {
+           return;
+        }
+        
         String showName = (String)showsCombobox.getSelectedItem();
         String showDate = (String)dateCombobox.getSelectedItem();
         String showSlot = (String)slotCombobox.getSelectedItem();
