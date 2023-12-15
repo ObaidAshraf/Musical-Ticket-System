@@ -10,9 +10,14 @@ import java.text.*;
 /**
  *
  * @author Administrator
+ * @brief: A class serving as glue between DbHandler and MusicalTicketSystem classes
  */
 public class MusicalDataHandler {
     
+    /**
+     * @brief Method to read CSV file and insert records into Database
+     * @param filename 
+     */
     public void read_data_and_insert_into_db(String filename) {
         ArrayList<String[]> list;
         String[] data;
@@ -44,6 +49,10 @@ public class MusicalDataHandler {
         
     }
     
+    /**
+     * @brief Method to fetch recrods from Database
+     * @return Map containing records
+     */
     public HashMap<String, ArrayList<String[]>> get_records_from_db() {
         HashMap<String, ArrayList<String[]>> shows =  new HashMap<String, ArrayList<String[]>>();
         DbHandler dbHandler = new DbHandler();
@@ -59,6 +68,12 @@ public class MusicalDataHandler {
         return shows;
     }
     
+    /**
+     * @brief Method to fetch records from database based on provided filter
+     * @param pattern
+     * @param column
+     * @return 
+     */
     public HashMap<String, ArrayList<String[]>> get_filtered_records_from_db(String pattern, String column) {
         HashMap<String, ArrayList<String[]>> shows =  new HashMap<String, ArrayList<String[]>>();
         DbHandler dbHandler = new DbHandler();
@@ -74,6 +89,9 @@ public class MusicalDataHandler {
         return shows;
     }
     
+    /**
+     * @brief Method to clear all records from Database
+     */
     public void clear_all_records() {
         DbHandler dbHandler = new DbHandler();
         try {
@@ -85,6 +103,11 @@ public class MusicalDataHandler {
         dbHandler.clear_shows_table();
     }
     
+    /**
+     * @brief Method to generate and save receipt (as text file)
+     * @param cName
+     * @param customer_data 
+     */
     public void save_receipt(String cName, ArrayList<String[]> customer_data) {
         String[] data;
         boolean hdr_written = false;

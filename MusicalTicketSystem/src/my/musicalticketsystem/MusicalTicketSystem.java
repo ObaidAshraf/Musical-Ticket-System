@@ -11,7 +11,7 @@ import java.io.File;
 import java.util.regex.Pattern;
 /**
  *
- * @author ubaid
+ * @author Administrator
  */
 public class MusicalTicketSystem extends javax.swing.JFrame {
 
@@ -25,6 +25,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     HashMap<String, ArrayList<String[]>> ticketsReserved = new HashMap<String, ArrayList<String[]>>();
 //    HashMap<String, String[]> price = new HashMap<String, String[]>();
     
+    /**
+     * Constructor
+     */
     public MusicalTicketSystem() {
         initComponents();
         init_gui();
@@ -32,11 +35,17 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         this.setResizable(false);
      }
       
+    /**
+     * @brief Method to populate GUI with records from Database
+     */
     private void populate_data() {
         MusicalDataHandler dataHandler = new MusicalDataHandler();
         shows = dataHandler.get_records_from_db();
     }
     
+    /**
+     * @brief Method to initialize GUI
+     */
     private void init_gui() {
         // Add initialization of fields here
         ticketCombobox.removeAllItems();
@@ -72,6 +81,10 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         set_components_state(false);
     }
     
+    /**
+     * @brief Method to enable or disable various GUI components based on provided state variable
+     * @param state 
+     */
     private void set_components_state(boolean  state) {
         if (state == true && shows.isEmpty()) {
             dialogBox dbox = new dialogBox();
@@ -88,6 +101,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         filterBtn.setEnabled(state);
     }
     
+    /**
+     * @brief Method to populate Shows list
+     */
     private void populate_list() {
         int row = 0;
         for (String i : shows.keySet()) {
@@ -96,6 +112,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         }
     }    
 
+    /**
+     * @brief Method to populate Shows list
+     */
     private void populate_shows() {
         ArrayList<String[]> list = new ArrayList<String[]>();
         String[] data;
@@ -112,6 +131,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * @brief Method to populate Shows list with filtered data
+     */
     private void populate_shows_filtered() {
         ArrayList<String[]> list = new ArrayList<String[]>();
         String[] data;
@@ -128,6 +150,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * @brief Method to print receipt
+     */
     private void print_receipt() {
         MusicalDataHandler dataHandler = new MusicalDataHandler();     
         ArrayList<String[]> list = new ArrayList<String[]>();
@@ -137,6 +162,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * @brief Method to update total tickets label in GUI
+     */
     private void update_total_tickets() {
         ArrayList<String[]> list = new ArrayList<String[]>();
         String[] data;
@@ -156,6 +184,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         totalTicketsCount.setText(Integer.toString(total_tickets));
     }
     
+    /**
+     * @brief Method to populate slots dropdown
+     */
     private void populate_slots() {
         String d = (String)dateCombobox.getSelectedItem();
         String m = (String)showsCombobox.getSelectedItem();
@@ -169,6 +200,10 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         }
     }
     
+    
+    /**
+     * @brief Method to populate date dropdown
+     */
     private void populate_dates() {
         String k = (String)showsCombobox.getSelectedItem();
         ArrayList<String[]> list = shows.get(k);
@@ -181,6 +216,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * @brief Method to filter shows
+     */    
     private void filter_shows() {
         boolean found = false;
         int rowsRemoved = 0;
@@ -208,6 +246,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * @brief Method to populate database with records
+     */
     private void import_data(String filename) {
         
         MusicalDataHandler dataHandler = new MusicalDataHandler();
@@ -215,6 +256,10 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
 
     }
 
+    
+    /**
+     * @brief Method to fetch price for a single show
+     */
     private String get_show_price(String show_name, String show_date, String show_slot) {
         
         ArrayList<String[]> list = new ArrayList<String[]>();
@@ -231,6 +276,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
         return "0";
     }
     
+    /**
+     * @brief Method to book a ticket
+     */
     private void book_ticket() {
         
         ArrayList<String[]> list = new ArrayList<String[]>();
@@ -270,6 +318,9 @@ public class MusicalTicketSystem extends javax.swing.JFrame {
     }
     
     
+    /**
+     * @brief Method to cancel a ticket
+     */
     private void cancel_ticket() {
         
         ArrayList<String[]> list = new ArrayList<String[]>();

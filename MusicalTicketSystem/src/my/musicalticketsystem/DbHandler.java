@@ -13,15 +13,22 @@ import java.util.*;
 import java.util.regex.Pattern;
 /**
  *
- * @author Administrator
+ * @brief: A class to handle connection and data insertion/retrieval into/from Derby Database
+ * 
  */
 public class DbHandler {
     
+    /**
+     * Some private class variables
+     */
     private String framework = "embedded";
     private String protocol = "jdbc:derby://localhost:1527/";
     private String dbName = "MusicalTicketSystem";
     Connection conn = null;
     
+    /**
+     * @brief: A method to construct a connection with the database
+     */
     public void setup_db_connection() {
         Properties props = new Properties();
         props.put("user", "app");
@@ -39,6 +46,10 @@ public class DbHandler {
         }
     }
     
+    /**
+     * @brief: A method to insert a record into database
+     * @param record 
+     */
     public void insert_record_into_db(String[] record) {
         ArrayList<Statement> statements = new ArrayList<Statement>();
         PreparedStatement psInsert;
@@ -64,6 +75,10 @@ public class DbHandler {
         } 
     }
     
+    /**
+     * @brief: Method to retrieve records from database
+     * @return Map containing records
+     */
     public  HashMap<String, ArrayList<String[]>> fetch_records_from_db() {
         HashMap<String, ArrayList<String[]>> shows = new HashMap<>();
         Statement s;
@@ -94,6 +109,13 @@ public class DbHandler {
         return shows;
     }
     
+    /**
+     * 
+     * @brief: Method to retrieve records from database based on some filter
+     * @param pattern
+     * @param column
+     * @return Map containing records
+     */
     public HashMap<String, ArrayList<String[]>> fetch_filtered_records_from_db(String pattern, String column) {
         HashMap<String, ArrayList<String[]>> shows = new HashMap<>();
         Statement s;
@@ -131,6 +153,9 @@ public class DbHandler {
         return shows;
     }
     
+    /**
+     * @brief: Method to clear table containing records
+     */
     public void clear_shows_table() {
         Statement s;
         int rs;
@@ -145,6 +170,9 @@ public class DbHandler {
         }
     }
     
+    /**
+     * @brief: Close connection with database
+     */
     public void close_db_connection() {
         try {
             conn.close();
