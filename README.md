@@ -1,2 +1,2 @@
 # Musical-Ticket-System
-London Musical Ticket system
+A Ticket system implemented in Java
